@@ -1,4 +1,4 @@
-crepes
+Crèpes
 ======
 
 First Django application 
