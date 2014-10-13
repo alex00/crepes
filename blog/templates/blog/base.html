@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<html>
+  <head>
+  	<title>Bonjour</title>
+    <link href="{% static 'blog/css/bootstrap.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'blog/css/style.css' %}" rel="stylesheet" media="screen">
+  </head>
+
+  <body>
+	{% include "blog/nav.html" %}
+
+	<div style="height: 100px"></div>
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="{% static 'blog/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>
