@@ -20,7 +20,7 @@ def article(request, id, slug):
 
 def article_new(request):
 	if request.method == 'POST':  # S'il s'agit d'une requête POST
-		form = ArticleForm(request.POST)
+		form = ArticleForm(request.POST, request.FILES)
 		if form.is_valid():
 			form.save()
 	else:
@@ -28,7 +28,7 @@ def article_new(request):
 	return render(request, 'blog/article_form.html', locals())
 
 def accueil(request):
-	derniers_articles = Article.objects.all()
+	derniers_articles = Article.objects.all().order_by('-date')
 	return render(request, 'blog/accueil.html', {'derniers_articles':derniers_articles})
 
 def contact(request):

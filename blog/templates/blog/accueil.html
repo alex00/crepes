@@ -9,6 +9,9 @@
 	{% for article in derniers_articles %}
 	    <div class="article">
 	    	<h3>{{ article.titre }}</h3>
+	    	<p>
+	    		<img src="{{ MEDIA_URL }}{{ article.photo }} " width="100"/> 
+	    	</p>
 	    	<p>{{ article.contenu|truncatewords_html:80 }}</p>
 	        <p><a href="{% url "blog.views.article" article.id article.slug %}">Lire la suite</a>
 	    </div>
