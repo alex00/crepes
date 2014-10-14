@@ -12,7 +12,7 @@
 		</div>
 	{% endif %}
 
-	<form action="{% url "blog.views.contact" %}" method="post">{% csrf_token %}
+	<form action="{% url "blog.views.core.contact" %}" method="post">{% csrf_token %}
 		{{ form.as_p }}
 		<input type="submit" value="Submit" btn btn-primary/>
 	</form>

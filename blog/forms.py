@@ -1,6 +1,8 @@
 #-*- coding: utf-8 -*-
 from django import forms
 from models import Article
+from django.db.models import Q
+from django.contrib.auth.models import User
 
 class ContactForm(forms.Form):
 
@@ -44,3 +46,32 @@ class ArticleForm(forms.ModelForm):
 		super(ArticleForm, self).__init__(*args, **kwargs)
 		for field in self.fields:
 			self.fields[field].widget.attrs['class'] = 'form-control'
+
+class LoginForm(forms.Form):   
+
+	login = forms.CharField(
+		label = 'Email ou Pseudo', 
+		widget=forms.TextInput(attrs={'class' : 'form-control'}),
+		required=True
+	)                                         
+	password  = forms.CharField(
+		label = 'Mot de passe', 
+		widget = forms.PasswordInput(attrs={'class' : 'form-control'}),
+		required = True
+	)
+
+	   
+	def clean(self):                                     
+		login = self.cleaned_data.get('login', '')         
+		password = self.cleaned_data.get('password', '')
+		self.user = None
+		users = User.objects.filter(Q(username=login)|Q(email=login))
+		for user in users:
+			if user.is_active and user.check_password(password):
+				self.user = user
+			if self.user is None:
+				msg = u"Login ou mot de passe invalide"
+				self._errors["message"] = self.error_class([msg])
+		return self.cleaned_data
+
+
